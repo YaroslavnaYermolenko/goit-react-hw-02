@@ -11,6 +11,7 @@ export default function App() {
     neutral: 0,
     bad: 0,
   };
+
   const [feedback, setFeedback] = useState(() => {
     return JSON.parse(localStorage.getItem("feedback")) ?? INIT_STATE;
   });
@@ -26,24 +27,29 @@ export default function App() {
     setFeedback(INIT_STATE);
   };
 
-  const updateFeedback = (feedbackType) =>
-    setFeedback((prev) => ({
-      ...prev,
-      [feedbackType]: prev[feedbackType]+1,
-    }));
+  const updateFeedback = (feedbackType) => {
+    setFeedback({
+      ...feedback,
+      [feedbackType]: feedback[feedbackType] + 1,
+    });
+  };
 
   return (
     <>
       <Description />
-      
+      {console.log("keys", Object.keys(feedback), feedback)}
       <Options
         states={Object.keys(feedback)}
         update={updateFeedback}
         reset={resetFeedback}
         total={totalFeedback}
       />
-      {totalFeedback ? (
-        <Feedback counter={(feedback, totalFeedback, positiveFeedback)} />
+      {totalFeedback > 0 ? (
+        <Feedback
+          feedback={feedback}
+          total={totalFeedback}
+          positiveFeedback={positiveFeedback}
+        />
       ) : (
         <Notification />
       )}
