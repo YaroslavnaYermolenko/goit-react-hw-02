@@ -1,0 +1,7 @@
+.statistic {
+  list-style: none;
+  font-family: "Raleway", serif;
+  display: grid;
+  justify-items: start;
+  justify-content: center;
+}

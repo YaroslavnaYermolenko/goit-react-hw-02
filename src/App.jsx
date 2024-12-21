@@ -21,7 +21,7 @@ export default function App() {
   }, [feedback]);
 
   const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
-  const positiveFeedback = Math.round((feedback.good / totalFeedback) * 100);
+  const positiveFeedback = totalFeedback > 0 ? Math.round((feedback.good / totalFeedback) * 100) : 0;
 
   const resetFeedback = () => {
     setFeedback(INIT_STATE);
@@ -37,7 +37,6 @@ export default function App() {
   return (
     <>
       <Description />
-      {console.log("keys", Object.keys(feedback), feedback)}
       <Options
         states={Object.keys(feedback)}
         update={updateFeedback}
@@ -47,7 +46,7 @@ export default function App() {
       {totalFeedback > 0 ? (
         <Feedback
           feedback={feedback}
-          total={totalFeedback}
+          totalFeedback={totalFeedback}
           positiveFeedback={positiveFeedback}
         />
       ) : (
